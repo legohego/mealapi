@@ -30,7 +30,7 @@ public class DishController {
 
 	@RequestMapping("/dishes")
 	@ResponseBody
-	public ResponseEntity <Object> getDishes() {
+	public ResponseEntity <Object> getDishes() throws NotFoundException {
 		logger.info("HTTP Method: GET, URL + Values /dishes");
 		List<Dish> dishList = dishService.getDishes();
 		
@@ -45,8 +45,16 @@ public class DishController {
 		return null;
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/dishes/location&name/")
+	public Dish getDishesByLocationAndName(@RequestParam(value = "location", required = true) String location,
+			@RequestParam(value = "name", required = true) String name) {
+		logger.info("GET: /dishes/location&name/?=location=" + location + "&name=" + name);
+		List<Dish> dishList = dishService.getDishesByLocationAndName(location, name);
+		
+		return null;
+	}
 	@RequestMapping(method = RequestMethod.GET, value = "/dish/")
-	public ResponseEntity<Object> getDishes(@RequestParam(value = "id", required = true) String id) {
+	public ResponseEntity<Object> getDishes(@RequestParam(value = "id", required = true) String id) throws NotFoundException {
 		logger.info("GET: /dish/?id=" + id);
 		Dish dish = dishService.getDish(id);
 		return new ResponseEntity<Object>(dish, null != dish ? HttpStatus.OK : HttpStatus.BAD_REQUEST);

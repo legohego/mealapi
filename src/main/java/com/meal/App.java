@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.meal.models.Business;
 import com.meal.models.Dish;
 import com.meal.models.Restaurant;
 import com.meal.service.impl.DishServiceImpl;
@@ -18,6 +20,8 @@ public class App implements CommandLineRunner{
     private DishServiceImpl DishServiceImpl;
     @Autowired
     private RestaurantServiceImpl restaurantServiceImpl;
+   // @Autowired
+   // private BusinessServiceImpl businessServiceImpl;
   
 	public static void main(String[] args) {
     SpringApplication.run(App.class, args);
@@ -26,12 +30,10 @@ public class App implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		logger.info("this is run");
-		logger.error("erioorororororororo");
-		restaurantServiceImpl.createRestaurant(new Restaurant ("Quay Street"));
-		restaurantServiceImpl.createRestaurant(new Restaurant ( "Tusnu"));
-		restaurantServiceImpl.createRestaurant(new Restaurant ("Dail Bar"));
-		restaurantServiceImpl.getRestaurants().forEach(Restaurant ->System.out.println(Restaurant.toString()));
+        Business business = new Business("viacom");
+		restaurantServiceImpl.createRestaurant(new Restaurant ("Quay Street"), "1");
+		restaurantServiceImpl.createRestaurant(new Restaurant ( "Tusnu"), "1");
+		restaurantServiceImpl.createRestaurant(new Restaurant ("Dail Bar"), "1");
 		DishServiceImpl.createDish(new Dish ("Steak", "Lovely food"), "1");
 		DishServiceImpl.createDish(new Dish ("Steak", "nice food"), "2");
 		DishServiceImpl.createDish(new Dish ("Steak", "Best food"), "3");

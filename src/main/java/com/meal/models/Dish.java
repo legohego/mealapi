@@ -1,8 +1,6 @@
 package com.meal.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,18 +28,15 @@ public class Dish implements Serializable{
     	this.id = id;
     	this.name = name;
     	this.description = description;
-
     	this.restaurant = restaurant;
     }
     public Dish(String name, String description) {
- 
     	this.name = name;
     	this.description = description;
     }
     public Dish(String name, String description,  Restaurant restaurant) {
     	this.name = name;
     	this.description = description;
-
     	this.restaurant = restaurant;
     }
 	public String getId() {

@@ -15,45 +15,66 @@ import com.meal.models.Restaurant;
 import com.meal.respository.DishRepository;
 import com.meal.respository.RestaurantRepository;
 import com.meal.services.DishService;
+
 @Service
 public class DishServiceImpl implements DishService {
 	private final Logger logger = LoggerFactory.getLogger("DishService");
 	private DishRepository dishRepository;
 	private RestaurantRepository restaurantRepository;
+
 	@Autowired
-	public DishServiceImpl(DishRepository dishRepository, RestaurantRepository restaurantRepository){
+	public DishServiceImpl(DishRepository dishRepository, RestaurantRepository restaurantRepository) {
 		this.dishRepository = dishRepository;
 		this.restaurantRepository = restaurantRepository;
 	}
+
+	public List<Dish> getDishes() throws NotFoundException {
+	 List<Dish> dishList = (List<Dish>) dishRepository.findAll();
+	 
+		if (dishList == null) {
+			throw new NotFoundException("No Dishes found for dishRepository.findAll()", "Method: getDishes");
+		}
+		return dishList;
+	}
+
+	public Dish getDish(String id) throws NotFoundException {
+
+		Dish dish = dishRepository.findOne(id);
+		if (dish == null) {
+			throw new NotFoundException("No Dish found with id: " + id, "Method: getDishes");
+		}
+		return dish;
+	}
+	
+	public List<Dish> getDishesByLocationAndName(String location, String name) {
 		
-	public List<Dish> getDishes(){
-		return (List<Dish>) dishRepository.findAll();
-	}
-	public Dish getDish(String id){
-	
-		return dishRepository.findOne(id);
-	}
-	
-	public Dish getFilteredDishes(String filter, String location, String dish){
 		return null;
 	}
+
+	public Dish getFilteredDishes(String filter, String location, String dish) {
+		return null;
+	}
+
 	public Dish createDish(Dish dish, String id) throws NotFoundException {
 		Restaurant restaurant = restaurantRepository.findOne(id);
-		if(restaurant == null) {
-			throw new NotFoundException("No Restaurant found with id: " + id+ ", Dish: " + dish.toString(), "createDish" );
-		} 
+		if (restaurant == null) {
+			throw new NotFoundException("No Restaurant found with id: " + id + ", Dish: " + dish.toString(),
+					"Method: createDish");
+		}
 		dish.setRestaurant(restaurant);
-		return dishRepository.save(dish);	
+		return dishRepository.save(dish);
 	}
-	//@Override
+
+	// @Override
 	public void updateDish(Dish dish) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	//@Override
+
+	// @Override
 	public void deleteDish(Dish dish) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public ArrayList<Dish> getDish(String location, String name, String[] filter) {
@@ -62,16 +83,15 @@ public class DishServiceImpl implements DishService {
 	}
 
 	public String deleteDish(String id) {
-	try{
-	 dishRepository.delete(id);	
-	
-	}catch(EmptyResultDataAccessException e){
+		try {
+			dishRepository.delete(id);
 
-		logger.warn("Exceptioned caught on DishServiceImpl.deleteDish: " + e);
-		id = null;
-	}
-	 return id;
+		} catch (EmptyResultDataAccessException e) {
+
+			logger.warn("Exceptioned caught on DishServiceImpl.deleteDish: " + e);
+			id = null;
+		}
+		return id;
 	}
 
-	
 }

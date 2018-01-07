@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,11 +15,16 @@ public class Restaurant {
 	private String id;
 	@Column
 	private String name;
+	@ManyToOne
+	private Business business;
 	
-	private Restaurant(){}
+	public Restaurant( String name, Business business){
+		this.name = name ;
+		this.business = business;
+	}
+	
 	public Restaurant( String name){
-		
-		this.setName(name);
+		this.name = name;
 	}
 	public String getId() {
 		return id;
@@ -35,6 +41,10 @@ public class Restaurant {
 	
 	public String toString(){
 		return this.id +":"+this.name +":"+this.id;
+	}
+	public void setBusiness(Business business) {
+		this.business = business;
+		
 	}
 
 }

@@ -2,7 +2,6 @@ package com.meal.services;
 
 import java.util.List;
 
-import com.meal.models.Dish;
 import com.meal.models.User;
 
 public interface UserService {
